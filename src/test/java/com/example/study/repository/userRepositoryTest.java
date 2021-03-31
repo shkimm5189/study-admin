@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public class userRepositoryTest extends StudyApplicationTests {
     @Autowired
@@ -23,9 +24,28 @@ public class userRepositoryTest extends StudyApplicationTests {
         User newUser = userRepository.save(user);
         System.out.println("new User" + newUser);
     }
+    @Test
     public void read(){
+        Optional<User> user = userRepository.findById(2L);
 
+        user.ifPresent(selectUser -> {
+            System.out.println(selectUser);
+        });
     }
+
+    @Test
+    public void update(){
+        Optional<User> user = userRepository.findById(2L);
+
+        user.ifPresent(selectUser ->{
+            selectUser.setAccount("pppp");
+            selectUser.setUpdatedAt(LocalDateTime.now());
+            selectUser.setUpdatedBy("updateMethod()");
+
+            userRepository.save(selectUser);
+        });
+    }
+    
     public void delete(){
 
     }
