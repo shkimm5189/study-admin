@@ -44,7 +44,6 @@ public class CategoryRepoTest extends StudyApplicationTests {
 
         //select * from category where type = 'computer'
         optionalCategory.ifPresent(c -> {
-
             System.out.println(c.getTitle());
             System.out.println(c.getType());
             System.out.println(c.getId());

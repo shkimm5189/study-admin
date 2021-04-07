@@ -56,8 +56,14 @@ public class UserRepositoryTest extends StudyApplicationTests {
 
             System.out.println("----------------");
             orderGroup.getOrderDetailList().forEach(orderDetail -> {
+                System.out.println(orderDetail.getItem().getPartner().getName());
+                System.out.println(orderDetail.getItem().getPartner().getCategory().getTitle());
+                System.out.println(orderDetail.getItem().getName());
+                System.out.println(orderDetail.getItem().getPartner().getCallCenter());
                 System.out.println(orderDetail.getStatus());
                 System.out.println(orderDetail.getArrivalDate());
+
+
             });
         });
         Assertions.assertNotNull(user);
