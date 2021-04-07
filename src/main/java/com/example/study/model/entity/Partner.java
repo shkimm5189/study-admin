@@ -46,4 +46,7 @@ public class Partner {
 
     private String updatedBy;
 
+    private Long categoryId;
+
+
 }
