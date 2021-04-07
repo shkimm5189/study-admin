@@ -39,6 +39,4 @@ public class User {
 
     private String updatedBy;
 
-    @OneToMany(fetch = FetchType.LAZY , mappedBy = "user")
-    private List<OrderDetail> orderDetailList;
 }
