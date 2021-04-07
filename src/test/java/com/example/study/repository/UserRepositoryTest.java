@@ -35,7 +35,12 @@ public class UserRepositoryTest extends StudyApplicationTests {
         user.setPhoneNumber(phoneNumber);
         user.setRegisteredAt(registeredAt);
 
-
+        User u = User.builder()
+                .account(account)
+                .password(password)
+                .status(status)
+                .email(email)
+                .build();
         User newUser = userRepository.save(user);
 
         Assertions.assertNotNull(newUser);
