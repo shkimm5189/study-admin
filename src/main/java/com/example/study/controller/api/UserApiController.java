@@ -2,8 +2,7 @@ package com.example.study.controller.api;
 
 import com.example.study.ifs.CrudInterface;
 import com.example.study.model.network.Header;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -11,22 +10,26 @@ public class UserApiController implements CrudInterface {
 
 
     @Override
+    @PostMapping("")
     public Header create() {
         return null;
     }
 
     @Override
-    public Header read(Long id) {
+    @GetMapping("{id}") // /api/user/{id}
+    public Header read(@PathVariable(name = "id") Long id) {
         return null;
     }
 
     @Override
+    @PutMapping("")
     public Header update() {
         return null;
     }
 
     @Override
-    public Header delete(Long id) {
+    @DeleteMapping("{id}")
+    public Header delete(@PathVariable Long id) {
         return null;
     }
 }
