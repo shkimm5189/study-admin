@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResponse> {
@@ -46,12 +47,51 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 
     @Override
     public Header<UserApiResponse> read(Long id) {
-        return null;
+        // id -> repository getOne,getById
+        Optional<User> optional = userRepository.findById(id);
+//         user -> userApiResponse return
+        return optional
+                .map(user -> response(user))
+                .orElseGet(
+                        ()->Header.ERROR("데이터 없음")
+                );
+
+        /*
+        람다를 활용하여 더 간단하게 표현
+        return userRepository.findById(id)
+                .map(user -> response(user))
+                .orElseGet(
+                        () ->Header.ERROR("데이터 없음")
+                );
+        */
+
     }
 
     @Override
-    public Header<UserApiResponse> update(Header<UserApiRequest> requset) {
-        return null;
+    public Header<UserApiResponse> update(Header<UserApiRequest> request) {
+        //todo
+
+        // 1 .data
+        UserApiRequest userApiRequest = request.getData();
+
+        // 2. id -> user 데이터 찾고
+        Optional<User> optional = userRepository.findById(userApiRequest.getId());
+        return optional.map(user-> {
+            //3. data -> update
+            user.setAccount(userApiRequest.getAccount())
+                    .setPassword(userApiRequest.getStatus())
+                    .setStatus(userApiRequest.getStatus())
+                    .setPhoneNumber(userApiRequest.getPhoneNumber())
+                    .setEmail(userApiRequest.getEmail())
+                    .setRegisteredAt(userApiRequest.getRegisteredAt())
+                    .setUnregisteredAt(userApiRequest.getUnregisteredAt());
+            return user;
+        })
+                //update -> newUser
+                .map(user -> userRepository.save(user))
+                //userApiResponse
+                .map(updateUser -> response(updateUser))
+                .orElseGet(()-> Header.ERROR("데이터 없음"));
     }
 
     @Override
@@ -69,7 +109,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
                 .phoneNumber(user.getPhoneNumber())
                 .status(user.getStatus())
                 .registeredAt(user.getRegisteredAt())
-                .unRegisteredAt(user.getRegisteredAt())
+                .unregisteredAt(user.getRegisteredAt())
                 .build();
 
         return Header.OK(userApiResponse);

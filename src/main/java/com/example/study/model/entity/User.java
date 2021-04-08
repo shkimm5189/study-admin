@@ -18,6 +18,7 @@ import java.util.List;
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @ToString(exclude = {"orderGroupList"})
+@Accessors(chain = true)
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
